@@ -1,0 +1,42 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import java.util.concurrent.TimeUnit;
+
+public class Facebooklogin {
+    private static final String FACEBOOK_LOGIN = "...";
+    private static final String FACEBOOK_PASS = "...";
+    private WebDriver browser;
+
+
+    @BeforeTest
+    public void openBrowser(){
+        System.setProperty("webdriver.chrome.driver","C:/chromedriver/chromedriver.exe");
+        browser = new ChromeDriver();
+        browser.manage().window().maximize();
+        browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+
+    }
+
+    @Test
+
+    public void facebookPage(){
+       browser.get("https://uk-ua.facebook.com/");
+       browser.findElement(By.cssSelector("#email")).sendKeys(FACEBOOK_LOGIN);
+       browser.findElement(By.cssSelector("#pass")).sendKeys(FACEBOOK_PASS);
+       browser.findElement(By.cssSelector(".uiButtonConfirm")).click();
+       String userName = browser.findElement(By.cssSelector("._1vp5")).getText();
+       System.out.println(userName);
+
+    }
+
+    @AfterTest
+    public void closeBrowser (){
+        browser.quit();
+    }
+}
